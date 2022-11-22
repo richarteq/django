@@ -4,6 +4,8 @@
 [![Git][Git]][git-site]
 [![GitHub][GitHub]][github-site]
 [![Vim][Vim]][vim-site]
+[![Python][Python]][python-site]
+[![Django][Django]][django-site]
 [![Java][Java]][java-site]
 
 #
@@ -441,14 +443,6 @@
 
 #
 
-[license]: https://img.shields.io/github/license/rescobedoq/pw2?label=rescobedoq
-[license-file]: https://github.com/rescobedoq/pw2/blob/main/LICENSE
-
-[downloads]: https://img.shields.io/github/downloads/rescobedoq/pw2/total?label=Downloads
-[releases]: https://github.com/rescobedoq/pw2/releases/
-
-[last-commit]: https://img.shields.io/github/last-commit/rescobedoq/pw2?label=Last%20Commit
-
 [Debian]: https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white
 [debian-site]: https://www.debian.org/index.es.html
 
@@ -464,14 +458,17 @@
 [Java]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white
 [java-site]: https://docs.oracle.com/javase/tutorial/
 
+[Python]: https://img.shields.io/badge/-Python-F9DC3E.svg?logo=python&style=flat
+[python-site]: https://www.python.org/
+
+[Django]: https://img.shields.io/badge/-Django-092E20.svg?logo=django&style=flat
+[django-site]: https://www.djangoproject.com/
 
 [![Debian][Debian]][debian-site]
 [![Git][Git]][git-site]
 [![GitHub][GitHub]][github-site]
 [![Vim][Vim]][vim-site]
+[![Python][Python]][python-site]
+[![Django][Django]][django-site]
 [![Java][Java]][java-site]
 
-
-[![License][license]][license-file]
-[![Downloads][downloads]][releases]
-[![Last Commit][last-commit]][releases]
