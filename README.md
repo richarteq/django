@@ -455,7 +455,7 @@
 [Vim]: https://img.shields.io/badge/VIM-%2311AB00.svg?style=for-the-badge&logo=vim&logoColor=white
 [vim-site]: https://www.vim.org/
 
-[Java]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white
+[Java]: https://img.shields.io/badge/java-%23ED8B00.svg?style=flat&logo=java&logoColor=white
 [java-site]: https://docs.oracle.com/javase/tutorial/
 
 [Python]: https://img.shields.io/badge/-Python-F9DC3E.svg?logo=python&style=flat
