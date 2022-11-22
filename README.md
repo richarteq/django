@@ -9,28 +9,16 @@
 [![Java][Java]][java-site]
 
 #
-
-## OBJETIVOS TEMAS Y COMPETENCIAS
-
-### OBJETIVOS
+## OBJETIVOS
 
 -   Crear un Proyecto Django dentro de un entorno virtual.
 
-### TEMAS
+## TEMAS
 -   Entorno virtual
 -   Django
 -   Modelos
 -   Migraciones
 -   Panel de administración
-
-<details>
-<summary>COMPETENCIAS</summary>
-
-- C.c Diseña responsablemente sistemas, componentes o procesos para satisfacer necesidades dentro de restricciones realistas: económicas, medio ambientales, sociales, políticas, éticas, de salud, de seguridad, manufacturación y sostenibilidad.
-- C.m Construye responsablemente soluciones siguiendo un proceso adecuado llevando a cabo las pruebas ajustada a los recursos disponibles del cliente.
-- C.p Aplica de forma flexible técnicas, métodos, principios, normas, estándares y herramientas de ingeniería necesarias para la construcción de software e implementación de sistemas de información.
-
-</details>
 
 ## CONTENIDO DE LA GUÍA
 
@@ -443,16 +431,16 @@
 
 #
 
-[Debian]: https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white
+[Debian]: https://img.shields.io/badge/Debian-D70A53?style=flat&logo=debian&logoColor=white
 [debian-site]: https://www.debian.org/index.es.html
 
-[Git]: https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white
+[Git]: https://img.shields.io/badge/git-%23F05033.svg?style=flat&logo=git&logoColor=white
 [git-site]: https://git-scm.com/
 
-[GitHub]: https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white
+[GitHub]: https://img.shields.io/badge/github-%23121011.svg?style=flat&logo=github&logoColor=white
 [github-site]: https://github.com/
 
-[Vim]: https://img.shields.io/badge/VIM-%2311AB00.svg?style=for-the-badge&logo=vim&logoColor=white
+[Vim]: https://img.shields.io/badge/VIM-%2311AB00.svg?style=flat&logo=vim&logoColor=white
 [vim-site]: https://www.vim.org/
 
 [Java]: https://img.shields.io/badge/java-%23ED8B00.svg?style=flat&logo=java&logoColor=white
