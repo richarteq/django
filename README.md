@@ -453,6 +453,7 @@
 [django-site]: https://www.djangoproject.com/
 
 [JavaScript]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
+[javascript-site]: https://developer.mozilla.org/es/docs/Web/JavaScript
 
 [![Debian][Debian]][debian-site]
 [![Git][Git]][git-site]
@@ -460,6 +461,6 @@
 [![Vim][Vim]][vim-site]
 [![Python][Python]][python-site]
 [![Django][Django]][django-site]
-[JavaScript][JavaScript]
+[![JavaScript][JavaScript]][javascript-site]
 [![Java][Java]][java-site]
 
