@@ -452,11 +452,14 @@
 [Django]: https://img.shields.io/badge/-Django-092E20.svg?logo=django&style=flat
 [django-site]: https://www.djangoproject.com/
 
+[JavaScript]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
+
 [![Debian][Debian]][debian-site]
 [![Git][Git]][git-site]
 [![GitHub][GitHub]][github-site]
 [![Vim][Vim]][vim-site]
 [![Python][Python]][python-site]
 [![Django][Django]][django-site]
+[JavaScript][JavaScript]
 [![Java][Java]][java-site]
 
