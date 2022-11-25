@@ -6,238 +6,120 @@
 [![Vim][Vim]][vim-site]
 [![Python][Python]][python-site]
 [![Django][Django]][django-site]
+[![JavaScript][JavaScript]][javascript-site]
 [![Java][Java]][java-site]
 
 #
 ## OBJETIVOS
-
--   Crear un Proyecto Django dentro de un entorno virtual.
+Crear Proyecto y Aplicaciones Django 4 dentro de un entorno virtual.
 
 ## TEMAS
--   Entorno virtual
--   Django
--   Modelos
--   Migraciones
--   Panel de administración
+- Entorno virtual
+- Django
+- Proyectos
+- Aplicaciones
+- Modelos
+- Migraciones
+- Panel de administración
 
-## CONTENIDO DE LA GUÍA
+## EJERCICIOS
 
-### MARCO CONCEPTUAL
+### Crear Directorio de trabajo
+```sh
+mkdir myDjangoProjects
+```
+    
+### Crear entorno virtual
+```sh
+cd myDjangoProjects
+virtualenv -p python3 env
+```
+    
+### Activar el Entorno Virtual
+```sh
+source env/bin/activate
+```
 
--   pip ~ Instaladors de paquetes de Python
--   Indice de paquetes de Python ~ PyPI. Otros: CPAN->Perl, Perl->PHP
--   
+### Listamos los paquetes instalados
+```sh
+pip list
+```
 
-## EJERCICIO RESUELTO POR EL DOCENTE
+### Instalamos Django con pip:
+```sh
+pip install Django
+```
+    
+### Dentro del entorno virtual. Crear un nuevo proyecto Django
+```sh
+django-admin startproject myDjangoProject
+```
 
--   Crea el directorio para trabajar Django dentro de un entorno virtual:
-    ```sh
-    mkdir django_env
-    ```
-    ```sh
-    tree .
-    ```
-    ```sh
-    .
-    ├── django_env
-    └── README.md
+### Crear una aplicación en la raiz y otro dentro de un subdirectorio de aplicaciones
+```sh
+django-admin startapp myFirstAplication
+```
+```sh
+mkdir myApplications
+cd myApplications
+django-admin startapp mySecondAplication
+```
 
-    1 directory, 1 file
-    ```
+### Crear un modelo para ```myFirstAplication``` editando su archivo ```models.py```
+```sh
+vim models.py
+```
+```sh
+from django.db import models
+import uuid
+# Create your models here.
 
--   Crear el entorno virtual dentro del directorio creado:
-    ```sh
-    cd django_env
-    virtualenv -p python3 env
-    ```
-    ```sh
-    created virtual environment CPython3.9.2.final.0-64 in 3932ms
-    creator CPython3Posix(dest=/.../env, clear=False, no_vcs_ignore=False, global=False)
-    seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/.../.local/share/virtualenv)
-    added seed packages: pip==22.0.4, setuptools==62.1.0, wheel==0.37.1
-    activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
-    ```
+class Organization(models.Model):    
+    name = models.CharField(max_length=150, null=False, blank=False)
+    email = models.EmailField(max_length=100, null=False, blank=False)
+    website = models.URLField(max_length=100, null=True, blank=True)
+    status = models.BooleanField(default=True, null=False)
+    created = models.DateTimeField(editable=False, null=False, auto_now_add=True)
+    modified = models.DateTimeField(editable=False, null=False, auto_now=True)
+```
 
-    ```sh
-    tree -L 4 ../
-    ```
-    ```sh
-    ../
-    ├── django_env
-    │   └── env
-    │       ├── bin
-    │       │   ├── activate
-    │       │   ├── activate.csh
-    │       │   ├── activate.fish
-    │       │   ├── activate.nu
-    │       │   ├── activate.ps1
-    │       │   ├── activate_this.py
-    │       │   ├── deactivate.nu
-    │       │   ├── pip
-    │       │   ├── pip3
-    │       │   ├── pip-3.9
-    │       │   ├── pip3.9
-    │       │   ├── python -> /usr/bin/python3
-    │       │   ├── python3 -> python
-    │       │   ├── python3.9 -> python
-    │       │   ├── wheel
-    │       │   ├── wheel3
-    │       │   ├── wheel-3.9
-    │       │   └── wheel3.9
-    │       ├── lib
-    │       │   └── python3.9
-    │       └── pyvenv.cfg
-    └── README.md
-    ```
+### Crear otro modelo para ```mySecondAplication``` editando su archivo ```models.py```
+```sh
+vim models.py
+```
+```sh
+from django.db import models
+import uuid
+# Create your models here.
 
--   Comprobemos que estemos en el directorio ```django_env```:
-    ```sh
-    pwd
-    /home/.../django_env
-    ```
+class Menu(models.Model):    
+    UBICATION = [
+        ('main_menu', 'Main Menu'),
+        ('left_sidebar', 'Let Sidebar'),
+        ('right_sidebar', 'Right Sidebar'),
+        ('tree_menu', 'Tree Menu'),
+        ('up_menu', 'Up Menu'),
+        ('bottom_menu', 'Bottom Menu'),
+    ]
+    ubication = models.CharField(null=False, choices=UBICATION, default='main_menu', max_length=20)       
+    label = models.CharField(null=False, blank=False, max_length=20)    
+    weight = models.IntegerField(null=True, blank=True)    
+    status = models.BooleanField(default=True, null=False)
+    created = models.DateTimeField(editable=False, null=False, auto_now_add=True)
+    modified = models.DateTimeField(null=False, auto_now=True)
+    father = models.OneToOneField('self', blank=True, symmetrical=False)
 
--   Activamos el entorno virtual:
-    ```sh
-    source env/bin/activate
-    ```
+    class Meta:
+        ordering = ['ubication', 'label', 'weight', 'status']
 
--   Listamos los paquetes instalados
-    ```sh
-    pip list
-    ```
-    ```sh
-    Package    Version
-    ---------- -------
-    pip        22.0.4
-    setuptools 62.1.0
-    wheel      0.37.1
-    WARNING: You are using pip version 22.0.4; however, version 22.1.2 is available.
-    You should consider upgrading via the '/home/.../django_env/env/bin/python -m pip install --upgrade pip' command.
-    ```
+    def save(self, *args, **kwargs):
+        self.label = self.name.upper()
+        return super(Course, self).Menu(*args, **kwargs)
 
--   Instalamos Django con pip:
-    ```sh
-    pip install Django
-    ```
-    ```sh
-    Collecting Django
-    Downloading Django-4.0.5-py3-none-any.whl (8.0 MB)
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.0/8.0 MB 3.6 MB/s eta 0:00:00
-    Collecting asgiref<4,>=3.4.1
-    Downloading asgiref-3.5.2-py3-none-any.whl (22 kB)
-    Collecting sqlparse>=0.2.2
-    Downloading sqlparse-0.4.2-py3-none-any.whl (42 kB)
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.3/42.3 KB 658.8 kB/s eta 0:00:00
-    Installing collected packages: sqlparse, asgiref, Django
-    Successfully installed Django-4.0.5 asgiref-3.5.2 sqlparse-0.4.2
-    WARNING: You are using pip version 22.0.4; however, version 22.1.2 is available.
-    You should consider upgrading via the '/home/.../django_env/env/bin/python -m pip install --upgrade pip' command.
-    ```
+    def __str__(self):
+        return "%s %s %s %s %s" % (self.ubication, self.label, self.weight, self.status)
+```
 
--   Volvemos a listar los paquetes instalados:
-    ```sh
-    pip list
-    ```
-    ```sh
-    Package    Version
-    ---------- -------
-    asgiref    3.5.2
-    Django     4.0.5
-    pip        22.0.4
-    setuptools 62.1.0
-    sqlparse   0.4.2
-    wheel      0.37.1
-    WARNING: You are using pip version 22.0.4; however, version 22.1.2 is available.
-    You should consider upgrading via the '/home/.../django_env/env/bin/python -m pip install --upgrade pip' command.
-    ```
-
--   Dentro del entorno virtual. Crearemos un proyecto Django que se llame ```Proyecto```
-    ```sh
-    django-admin startproject Proyecto
-    ```
-    ```sh
-    tree Proyecto
-    ```
-    ```sh
-    Proyecto
-    ├── manage.py
-    └── Proyecto
-        ├── asgi.py
-        ├── __init__.py
-        ├── settings.py
-        ├── urls.py
-        └── wsgi.py
-    ```
-
--   ```Es preferible ordenar las aplicaciones ya que muchas veces se necesita crear dos o más. Entonces las vamos a crear en directorios individuales para cada de aplicación.```
-    ```sh
-    cd Proyecto
-    ```
-    ```sh
-    pwd
-    ```
-    ```sh
-    /home/.../django_env/Proyecto
-    ```
-    ```sh
-    ../
-    ├── env
-    └── Proyecto
-        ├── manage.py
-        └── Proyecto
-            ├── asgi.py
-            ├── __init__.py
-            ├── settings.py
-            ├── urls.py
-            └── wsgi.py
-    ```
-
--   Ingresar al directorio ```.../django_env/Proyecto``` y alli crear un directorio llamado ```Apps``` para alojar alli a las aplicaciones.
-    ```sh
-    mkdir Apps
-    cd Apps
-    django-admin startapp Aplicacion1
-    ```
-    ```sh
-    tree ../
-    ```
-    ```sh
-    ../
-    ├── Apps
-    │   └── Aplicacion1
-    │       ├── admin.py
-    │       ├── apps.py
-    │       ├── __init__.py
-    │       ├── migrations
-    │       │   └── __init__.py
-    │       ├── models.py
-    │       ├── tests.py
-    │       └── views.py
-    ├── manage.py
-    └── Proyecto
-        ├── asgi.py
-        ├── __init__.py
-        ├── settings.py
-        ├── urls.py
-        └── wsgi.py
-    ```
-
--   Crearemos nuestro primer modelo editando el archivo ```models.py```
-    ```sh
-    vim models.py
-    ```
-    ```sh
-    from django.db import models
-    import uuid
-    # Create your models here.
-
-    class Video(models.Model):
-        id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-        titulo = models.CharField(max_length=100)
-        url = models.URLField(max_length=200)
-        fecha_carga = models.DateField(auto_now=True)
-
-    ```
 
 -   Registrar el modelo dentro de ```admin.py```
     ```sh
@@ -452,8 +334,8 @@
 [Django]: https://img.shields.io/badge/-Django-092E20.svg?logo=django&style=flat
 [django-site]: https://www.djangoproject.com/
 
-[JavaScript]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
-[javascript-site]: https://developer.mozilla.org/es/docs/Web/JavaScript
+[JavaScript]: https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black
+[javascript-site]: https://developer.mozilla.org/es/docs/Web/JavaScript/
 
 [![Debian][Debian]][debian-site]
 [![Git][Git]][git-site]
