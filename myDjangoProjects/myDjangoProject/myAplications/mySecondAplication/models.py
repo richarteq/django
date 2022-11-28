@@ -13,18 +13,18 @@ class Menu(models.Model):
     ]
     ubication = models.CharField(null=False, choices=UBICATION, default='main_menu', max_length=20)       
     label = models.CharField(null=False, blank=False, max_length=20)    
-    weight = models.IntegerField(null=True, blank=True)    
+    weight = models.IntegerField(null=True, blank=True, default=0)    
     status = models.BooleanField(default=True, null=False)
     created = models.DateTimeField(editable=False, null=False, auto_now_add=True)
     modified = models.DateTimeField(null=False, auto_now=True)
-    father = models.OneToOneField('self', on_delete=models.CASCADE, related_name="father_menu", blank=True)
+    father = models.OneToOneField('self', on_delete=models.CASCADE, related_name="father_menu", blank=True, null=True)
 
     class Meta:
         ordering = ['ubication', 'label', 'weight', 'status']
 
     def save(self, *args, **kwargs):
-        self.label = self.name.upper()
-        return super(Course, self).Menu(*args, **kwargs)
+        self.label = self.label.upper()
+        return super(Menu, self).save(*args, **kwargs)
 
     def __str__(self):
-        return "%s %s %s %s %s" % (self.ubication, self.label, self.weight, self.status)
+        return "%s %s %s %s" % (self.ubication, self.label, self.weight, self.status)

@@ -13,3 +13,6 @@ class Organization(models.Model):
     status = models.BooleanField(default=True, null=False)
     created = models.DateTimeField(editable=False, null=False, auto_now_add=True)
     modified = models.DateTimeField(editable=False, null=False, auto_now=True)
+    
+    def __str__(self):
+        return "%s %s %s %s" % (self.name, self.email, self.status, self.created)
