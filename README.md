@@ -11,7 +11,7 @@
 
 #
 ## OBJETIVOS
-Crear Proyecto y Aplicaciones Django 4 dentro de un entorno virtual.
+Crear un Proyecto y Aplicaciones Django 4 dentro de un entorno virtual.
 
 ## TEMAS
 - Entorno virtual
@@ -29,12 +29,16 @@ Crear Proyecto y Aplicaciones Django 4 dentro de un entorno virtual.
 mkdir myDjangoProjects
 ```
     
-### Crear entorno virtual
+### Ingresar al directorio de trabajo
 ```sh
 cd myDjangoProjects
+```
+
+### Crear entorno virtual
+```sh
 virtualenv -p python3 env
 ```
-    
+
 ### Activar el Entorno Virtual
 ```sh
 source env/bin/activate
@@ -55,41 +59,53 @@ pip install Django
 django-admin startproject myDjangoProject
 ```
 
-### Crear una aplicación en la raiz y otro dentro de un subdirectorio de aplicaciones
+### Crear una aplicación en la raiz
 ```sh
 django-admin startapp myFirstAplication
 ```
+
+### Crear un subdirectorio para albergar varias aplicaciones
 ```sh
 mkdir myApplications
+```
+
+### Ingresar al subdirectorio de aplicaciones
+```sh
 cd myApplications
+```
+
+### Crear una aplicación dentro del subdirectorio de aplicaciones
+```sh
 django-admin startapp mySecondAplication
 ```
 
-### Crear un modelo para ```myFirstAplication``` editando su archivo ```models.py```
+### Crear un modelo para ```myFirstAplication``` editando el archivo ```myFirstAplication/models.py```
 ```sh
 vim models.py
 ```
 ```sh
 from django.db import models
-import uuid
+
 # Create your models here.
 
 class Organization(models.Model):    
-    name = models.CharField(max_length=150, null=False, blank=False)
-    email = models.EmailField(max_length=100, null=False, blank=False)
+    name = models.CharField(unique=True, max_length=150, null=False, blank=False)
+    slogan = models.CharField(max_length=255, null=True, blank=True)
+    email = models.EmailField(unique=True, max_length=100, null=False, blank=False)
     website = models.URLField(max_length=100, null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
     status = models.BooleanField(default=True, null=False)
     created = models.DateTimeField(editable=False, null=False, auto_now_add=True)
     modified = models.DateTimeField(editable=False, null=False, auto_now=True)
 ```
 
-### Crear otro modelo para ```mySecondAplication``` editando su archivo ```models.py```
+### Crear otro modelo para ```mySecondAplication``` editando el archivo ```mySecondAplication/models.py```
 ```sh
 vim models.py
 ```
 ```sh
 from django.db import models
-import uuid
+
 # Create your models here.
 
 class Menu(models.Model):    
@@ -121,167 +137,88 @@ class Menu(models.Model):
 ```
 
 
--   Registrar el modelo dentro de ```admin.py```
-    ```sh
-    vim admin.py
-    ```
-    ```sh
-    from django.contrib import admin
-    from .models import Video
+### Registrar los modelos dentro de los archivos ```admin.py``` correspondientes
+```sh
+vim admin.py
+```
+```sh
+from django.contrib import admin
 
-    # Register your models here.
+# Register your models here.
 
-    admin.site.register(Video)
-    ```
+from .models import Organization
+admin.site.register(Organization)
+```
+```sh
+from django.contrib import admin
 
--   Añadir la aplicación como una aplicación instalada en el archivo ```Proyecto/settings.py```
-    ```sh
-    vim settings.py
-    ```
-    ```sh
-    #...
-    # Application definition
+# Register your models here.
 
-    INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        'Apps.Aplicacion1'
-    ]
-    #...
-    ```
--   ```Si estas trabajando en entornos virtuales es muy probable que no reconozca la ruta de la aplicación. Así que debemos editar el archivo apps.py de la aplicación```
-    ```sh
-    vim apps.py
-    ```
-    ```sh
-    from django.apps import AppConfig
+from .models import Menu
+admin.site.register(Menu)
+```
 
+### Instalar las aplicaciones en el archivo ```myDjangoProject/settings.py```
+```sh
+vim settings.py
+```
+```sh
+#...
+# Application definition
 
-    class Aplicacion1Config(AppConfig):
-        default_auto_field = 'django.db.models.BigAutoField'
-        name = 'Apps.Aplicacion1'
-    ```
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'myFirstAplication',
+    'myAplications.mySecondAplication',
+]
+#...
+```
 
--   Ingresar al directorio ```.../django_env/Proyecto``` donde se encuentra el archivo ```manage.py``` para realizar la primera migración:
-    ```sh
-    python manage.py migrate
-    ```
-    ```sh
-    Operations to perform:
-    Apply all migrations: admin, auth, contenttypes, sessions
-    Running migrations:
-    Applying contenttypes.0001_initial... OK
-    Applying auth.0001_initial... OK
-    Applying admin.0001_initial... OK
-    Applying admin.0002_logentry_remove_auto_add... OK
-    Applying admin.0003_logentry_add_action_flag_choices... OK
-    Applying contenttypes.0002_remove_content_type_name... OK
-    Applying auth.0002_alter_permission_name_max_length... OK
-    Applying auth.0003_alter_user_email_max_length... OK
-    Applying auth.0004_alter_user_username_opts... OK
-    Applying auth.0005_alter_user_last_login_null... OK
-    Applying auth.0006_require_contenttypes_0002... OK
-    Applying auth.0007_alter_validators_add_error_messages... OK
-    Applying auth.0008_alter_user_username_max_length... OK
-    Applying auth.0009_alter_user_last_name_max_length... OK
-    Applying auth.0010_alter_group_name_max_length... OK
-    Applying auth.0011_update_proxy_permissions... OK
-    Applying auth.0012_alter_user_first_name_max_length... OK
-    Applying sessions.0001_initial... OK
-    ```
-    -   Podemos observar que la base de datos por defecto ```db.sqlite3``` se ha creado con las tablas iniciales
-    ```sh
-    tree -L 3 ../
-    ```
-    ```
-    ../
-    ├── env
-    └── Proyecto
-        ├── Apps
-        │   └── Aplicacion1
-        ├── db.sqlite3
-        ├── manage.py
-        └── Proyecto
-            ├── asgi.py
-            ├── __init__.py
-            ├── __pycache__
-            ├── settings.py
-            ├── urls.py
-            └── wsgi.py
-    ```
-
--   Crear el super usuario para poder ingresar al panel de administración:
-    ```sh
-    python manage.py createsuperuser
-    ```
-    ```sh
-    Username (leave blank to use 'richart'): richarteq 
-    Email address: richarteq@gmail.com
-    Password: 
-    Password (again): 
-    This password is entirely numeric.
-    Bypass password validation and create user anyway? [y/N]: y
-    Superuser created successfully.
-    ```
-
--   Crear las migraciones. La migración inicial creará el modelo Video.
-    ```sh
-    python manage.py makemigrations
-    ```
-    ```sh
-    Migrations for 'Aplicacion1':
-    Apps/Aplicacion1/migrations/0001_initial.py
-        - Create model Video
-    ```
--   Realizar una nueva migración para que los cambios se efectuen.
-     ```sh
-    python manage.py migrate
-    ```
-    ```sh
-    Operations to perform:
-    Apply all migrations: Aplicacion1, admin, auth, contenttypes, sessions
-    Running migrations:
-    Applying Aplicacion1.0001_initial... OK
-    ```
--   Ejecutar el servidor
-    ```sh
-    python manage.py runserver
-    ```
-    ```sh
-    Watching for file changes with StatReloader
-    Performing system checks...
-
-    System check identified no issues (0 silenced).
-    June 02, 2022 - 14:50:11
-    Django version 4.0.5, using settings 'Proyecto.settings'
-    Starting development server at http://127.0.0.1:8000/
-    Quit the server with CONTROL-C.
-    ```
-
--   Acceder al Panel de  administración desde el navegador web a : http://127.0.0.1:8000/admin
-
-    -   Inicio de sesión
-
-        ![DJANGO-PANEL-ADMIN-LOGIN](imagenes/django_admin_01.png)
-
-    -   Portada inicial
-        ![DJANGO-PANEL-ADMIN-HOME](imagenes/django_admin_02.png)
-
-    -   Agregando un nuevo video
-        ![DJANGO-PANEL-ADMIN-ADD-01](imagenes/django_admin_03.png)
-
-    -   Video agregado satisfactoriamente
-        ![DJANGO-PANEL-ADMIN-ADD-02](imagenes/django_admin_04.png)
-
-    -   Ver video
-        ![DJANGO-PANEL-ADMIN-VIEW](imagenes/django_admin_05.png)
+### Configure apps.py de la aplicación mySecondAplication
+```sh
+vim apps.py
+```
+```sh
+from django.apps import AppConfig
 
 
-#
+class MysecondaplicationConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'myAplications.mySecondAplication'
+```
+
+### Realice la primera migración, ubicandose donde se encuentra el archivo ```manage.py```
+```sh
+python3 manage.py migrate
+```
+
+### Crear el super usuario para poder ingresar al panel de administración:
+```sh
+python3 manage.py createsuperuser
+```
+    
+### Crear las migraciones. La migración inicial creará los modelos.
+```sh
+python3 manage.py makemigrations
+```
+    
+### Ejecutar el servidor
+```sh
+python3 manage.py runserver
+```
+
+### Acceda al Proyecto o al Panel de  administración
+```sh
+http://127.0.0.1:8000/
+```
+```sh
+http://127.0.0.1:8000/admin/
+```
 
 ## EJERCICIOS PROPUESTOS
 -   Crea un blog sencillo en un entorno virtual utilizando la guía: https://tutorial.djangogirls.org/es/django_start_project/
@@ -345,4 +282,3 @@ class Menu(models.Model):
 [![Django][Django]][django-site]
 [![JavaScript][JavaScript]][javascript-site]
 [![Java][Java]][java-site]
-
